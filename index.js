@@ -26,6 +26,9 @@ mongoose.connect(process.env.Mongourl,
 
 
 // ROUTES
+app.get("/", (req, res)=>{
+    res.send("server up and running");
+});
 app.get("/user", auth, (req, res) => {
     let token = "";
     token = req.cookies.savedtoken;
