@@ -12,7 +12,7 @@ const User = require("./models/User");
 app.use(express.json());  // for accessing req.body from forms.
 app.use(cookieparser()); //Used for extracting the cookies
 // app.use(cors());
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({credentials: true, origin: '*'}));
 dotenv.config();
 const PORT = 80 || process.env.PORT;
 
@@ -83,7 +83,7 @@ app.post("/login", async (req, res) => {
             const token = jwt.sign({ email }, process.env.tokenSecret);
 
             res.cookie("savedtoken", token, {
-                maxAge: 60 * 60 * 24 * 10 * 1000,
+                maxAge: 60 * 1000 * 60,
                 httpOnly: true
             });
             res.status(200).json({error: null, loggedin: true});
