@@ -12,7 +12,7 @@ const User = require("./models/User");
 app.use(express.json());  // for accessing req.body from forms.
 app.use(cookieparser()); //Used for extracting the cookies
 // app.use(cors());
-app.use(cors({credentials: true, origin: '*'}));
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 dotenv.config();
 const PORT = 80 || process.env.PORT;
 
