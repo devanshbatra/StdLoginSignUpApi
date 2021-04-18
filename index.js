@@ -16,7 +16,7 @@ app.use(cookieparser()); //Used for extracting the cookies
 // app.use(cors());
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 dotenv.config();
-const PORT = 80 || process.env.PORT;
+const PORT = process.env.PORT || 80;
 
 // Database Connection
 mongoose.connect(process.env.Mongourl,
