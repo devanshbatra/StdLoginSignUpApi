@@ -13,8 +13,6 @@ const server = http.createServer(app);
 
 app.use(express.json());  // for accessing req.body from forms.
 app.use(cookieparser()); //Used for extracting the cookies
-// app.use(cors());
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 dotenv.config();
 const PORT = process.env.PORT || 80;
 
@@ -28,6 +26,23 @@ mongoose.connect(process.env.Mongourl,
 
 
 // ROUTES
+
+cors: {
+    origin: ["http://localhost:3000","https://inspiring-shockley-9cb7b6.netlify.app/"]
+}
+
+
+
+app.all('*', function(req, res, next) {
+            let origin = req.headers.origin;
+            res.header("Access-Control-Allow-Origin", origin);
+            res.header("Access-Control-Allow-Credentials", true);
+                     
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            next();
+        });
+
+
 app.get("/", (req, res)=>{
     res.send("server up and running");
 });
@@ -89,7 +104,9 @@ app.post("/login", async (req, res) => {
 
             res.cookie("savedtoken", token, {
                 maxAge: 60 * 1000 * 60,
-                httpOnly: true
+                httpOnly: true,
+                sameSite: 'none',
+                secure: true
             });
             res.status(200).json({error: null, loggedin: true});
         }
@@ -109,7 +126,7 @@ function auth(req, res, next) {
             next();
         }
         catch{
-            res.status(400).send("Invalid token found");
+            res.status(401).send("Invalid token found");
         }
 
 
