@@ -1,5 +1,5 @@
 const express = require("express");
-const app = express();
+const http = require("http");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const cookieparser = require("cookie-parser");
 const cors = require("cors");
 const User = require("./models/User");
+const app = express();
+const server = http.createServer(app);
 
 
 app.use(express.json());  // for accessing req.body from forms.
@@ -115,6 +117,6 @@ function auth(req, res, next) {
 }
 
 // Listening to port
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log("server up and runnin'");
 });
